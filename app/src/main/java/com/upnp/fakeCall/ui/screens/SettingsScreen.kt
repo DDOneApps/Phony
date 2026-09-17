@@ -60,7 +60,7 @@ import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.StarBorder
-import androidx.compose.material.icons.outlined.VolumeOff
+import androidx.compose.material.icons.automirrored.outlined.VolumeOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.CardDefaults
@@ -403,7 +403,7 @@ fun SettingsScreen(
                                 AnswerAudioModeOption(
                                     title = stringResource(R.string.settings_answer_audio_mode_silent_title),
                                     subtitle = stringResource(R.string.settings_answer_audio_mode_silent_subtitle),
-                                    icon = Icons.Outlined.VolumeOff,
+                                    icon = Icons.AutoMirrored.Outlined.VolumeOff,
                                     selected = state.answerAudioMode == AnswerAudioMode.SILENT,
                                     onClick = { viewModel.onAnswerAudioModeChange(AnswerAudioMode.SILENT) }
                                 )
