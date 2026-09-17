@@ -11,7 +11,7 @@ AutoName: Phony
 RepoType: git
 Repo: https://github.com/DDOneApps/Phony.git
 
-Binaries: https://github.com/DDOneApps/Phony/releases/download/v%v/app-release-full.apk
+Binaries: https://github.com/DDOneApps/Phony/releases/download/v%v/app-release.apk
 
 Builds:
   - versionName: '2.5'
@@ -21,10 +21,17 @@ Builds:
     gradle:
       - yes
 
+  - versionName: '2.6'
+    versionCode: 26
+    commit: 5c52157dec285c73bc84dd1f388247d3741a127f
+    subdir: app
+    gradle:
+      - yes
+
 AllowedAPKSigningKeys: bfa2a6906d3c2f650717c4e0c2f5ffc47c60fa7202bc3a2c7429f8a9e59bde80
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 UpdateCheckData: app/build.gradle.kts|versionCode = (\d+)|.|versionName = "([^"]+)"
-CurrentVersion: '2.5'
-CurrentVersionCode: 25
+CurrentVersion: '2.6'
+CurrentVersionCode: 26

@@ -1,0 +1,8 @@
+<ul>
+<li>Full app rebrand from FakeCall to Phony.</li>
+<li>Added a reset first-use-setup option and a skip-setup option.</li>
+<li>Fixed calls not coming through when the screen is off.</li>
+<li>Fixed the custom timing dialog blur letting taps through and exiting the popup.</li>
+<li>Improved home screen animations for audio preview and call recording.</li>
+<li>New translations.</li>
+</ul>
