@@ -1,5 +1,9 @@
 package com.upnp.fakeCall.ui.screens
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -77,6 +81,11 @@ fun OnboardingScreen(
     val canFinish = permissionsReady && callingAccountReady
     var showSimProviderDialog by remember { mutableStateOf(false) }
     var simProviderOptions by remember { mutableStateOf<List<SimProviderOption>>(emptyList()) }
+    val legacyAdbCommand = stringResource(R.string.onboarding_adb_command)
+    val telecomUiAdbCommand = stringResource(R.string.onboarding_adb_command_telecomui)
+    val callingAccountsAdbCommand = remember(context) {
+        resolveCallingAccountsAdbCommand(context, legacyAdbCommand, telecomUiAdbCommand)
+    }
 
     fun finishSetup() {
         viewModel.completeOnboarding()
@@ -231,7 +240,7 @@ fun OnboardingScreen(
                             tonalElevation = 1.dp
                         ) {
                             Text(
-                                text = stringResource(R.string.onboarding_adb_command),
+                                text = callingAccountsAdbCommand,
                                 style = MaterialTheme.typography.labelLarge,
                                 fontFamily = FontFamily.Monospace,
                                 color = MaterialTheme.colorScheme.onSurface,
@@ -546,4 +555,29 @@ private fun PermissionCard(
             )
         }
     }
+}
+
+/**
+ * Returns the ADB command that opens the Calling Accounts screen on this device.
+ *
+ * Android 17 moved the calling-account settings activity out of
+ * `com.android.server.telecom` and into `com.google.android.telecomui`
+ * (see DDOneApps/Phony#7). A plain ADB command can only target one component, so we
+ * resolve which one actually exists on the device and show the matching command,
+ * falling back to the legacy one when the new package is unavailable.
+ */
+private fun resolveCallingAccountsAdbCommand(
+    context: Context,
+    legacyCommand: String,
+    telecomUiCommand: String
+): String {
+    val telecomUiComponent = ComponentName(
+        "com.google.android.telecomui",
+        "com.android.server.telecomui.settings.EnableAccountPreferenceActivity"
+    )
+    val intent = Intent(Intent.ACTION_MAIN).setComponent(telecomUiComponent)
+    val resolved = runCatching {
+        context.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+    }.getOrNull()
+    return if (resolved != null) telecomUiCommand else legacyCommand
 }
