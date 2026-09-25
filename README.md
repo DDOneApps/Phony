@@ -90,6 +90,16 @@ You can also save up to five quick trigger presets from the same section:
 - presets appear as launcher app actions (long-press the app icon)
 - presets are available as Quick Settings tiles (`Phony Preset 1` ... `Phony Preset 5`)
 
+## Release Variants
+
+Phony provides two APK variants for different use cases:
+
+- **`app-release.apk`** - Standard release with automatic update checking. The app periodically checks GitHub for newer versions and notifies you when an update is available. This requires internet connectivity for the update check feature. Recommended for most users.
+
+- **`app-release-offline.apk`** - Offline-optimized release without automatic update checking. This variant does not require internet permission for update checks, making it ideal for privacy-conscious users or restricted environments. You can still manually download and install newer versions from the [releases page](https://github.com/DDOneApps/Phony/releases).
+
+Both variants have identical core functionality for simulating fake calls. Choose the variant based on your privacy preferences and network requirements.
+
 ## Screenshots
 
 ![Screenshot 1](https://github.com/DDOneApps/Phony/blob/main/metadata/en-US/images/phoneScreenshots/1.png)
