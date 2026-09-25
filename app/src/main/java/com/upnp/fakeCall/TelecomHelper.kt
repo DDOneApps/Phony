@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
-import android.telephony.PhoneNumberUtils
-import android.util.Log
 
 class TelecomHelper(private val context: Context) {
 
@@ -47,10 +45,6 @@ class TelecomHelper(private val context: Context) {
     ): Boolean {
         return runCatching {
             val normalizedNumber = callerNumber.trim()
-            if (PhoneNumberUtils.isEmergencyNumber(normalizedNumber)) {
-                Log.w(TAG, "Refusing to create a fake call for an emergency number")
-                return@runCatching false
-            }
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             val timeoutSeconds = when (source) {
                 IncomingCallSource.ALARM -> prefs.getInt(KEY_ALARM_RING_TIMEOUT_SECONDS, DEFAULT_ALARM_RING_TIMEOUT_SECONDS)
@@ -87,7 +81,6 @@ class TelecomHelper(private val context: Context) {
         const val EXTRA_FAKE_CALLER_NUMBER = "extra_fake_caller_number"
         const val EXTRA_FAKE_CALL_SOURCE = "extra_fake_call_source"
         const val EXTRA_RING_TIMEOUT_SECONDS = "extra_ring_timeout_seconds"
-        private const val TAG = "TelecomHelper"
     }
 }
 
