@@ -40,7 +40,7 @@ import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Snooze
-import androidx.compose.material.icons.outlined.VolumeUp
+import androidx.compose.material.icons.automirrored.outlined.VolumeUp
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -649,7 +649,7 @@ fun AlarmCreateScreen(
                             selected = draft.speakerDefault == AlarmSpeakerDefault.SPEAKER,
                             onClick = { draft = draft.copy(speakerDefault = AlarmSpeakerDefault.SPEAKER) },
                             label = { Text(stringResource(R.string.alarm_speaker_speaker)) },
-                            leadingIcon = { Icon(Icons.Outlined.VolumeUp, contentDescription = null) }
+                            leadingIcon = { Icon(Icons.AutoMirrored.Outlined.VolumeUp, contentDescription = null) }
                         )
                     }
                 }

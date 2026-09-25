@@ -89,7 +89,7 @@ import androidx.compose.material.icons.outlined.Stop
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material.icons.outlined.Tune
-import androidx.compose.material.icons.outlined.VolumeUp
+import androidx.compose.material.icons.automirrored.outlined.VolumeUp
 import com.upnp.fakeCall.CallContact
 import com.upnp.fakeCall.CallerInputMode
 import com.upnp.fakeCall.CustomPreset
@@ -893,7 +893,7 @@ fun AudioPreviewCard(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             AnimatedIcon(
-                imageVector = Icons.Outlined.VolumeUp,
+                imageVector = Icons.AutoMirrored.Outlined.VolumeUp,
                 contentDescription = null,
                 shape = CircleShape,
                 backgroundColor = accentContainer,
