@@ -180,8 +180,6 @@ class FakeConnection(
         runCatching {
             audioManager.mode = AudioManager.MODE_NORMAL
         }
-        setAddress(Uri.EMPTY, TelecomManager.PRESENTATION_UNKNOWN)
-        setCallerDisplayName("", TelecomManager.PRESENTATION_UNKNOWN)
         setDisconnected(DisconnectCause(code))
         destroy()
     }
