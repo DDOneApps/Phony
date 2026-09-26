@@ -23,6 +23,7 @@ import android.telecom.PhoneAccount
 import android.telecom.TelecomManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.telephony.PhoneNumberUtils
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.upnp.fakeCall.ivr.IvrConfigStore
@@ -61,10 +62,16 @@ class FakeConnection(
     }
     private var wasAnswered = false
     private var snoozeTriggered = false
+    private val isEmergencyNumber = PhoneNumberUtils.isEmergencyNumber(callerNumber)
 
     init {
         val displayName = callerName.ifBlank { callerNumber }
-        setAddress(Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null), TelecomManager.PRESENTATION_ALLOWED)
+        if (!isEmergencyNumber) {
+            setAddress(
+                Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null),
+                TelecomManager.PRESENTATION_ALLOWED
+            )
+        }
         setCallerDisplayName(displayName, TelecomManager.PRESENTATION_ALLOWED)
         setConnectionCapabilities(CAPABILITY_MUTE)
         setAudioModeIsVoip(true)
@@ -179,14 +186,14 @@ class FakeConnection(
         runCatching {
             audioManager.mode = AudioManager.MODE_NORMAL
         }
-        clearTelecomIdentity()
         setDisconnected(DisconnectCause(code))
+        if (isEmergencyNumber) {
+            setAddress(
+                Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null),
+                TelecomManager.PRESENTATION_ALLOWED
+            )
+        }
         destroy()
-    }
-
-    private fun clearTelecomIdentity() {
-        setAddress(Uri.EMPTY, TelecomManager.PRESENTATION_UNKNOWN)
-        setCallerDisplayName("", TelecomManager.PRESENTATION_UNKNOWN)
     }
 
     private fun scheduleRingTimeoutIfNeeded() {
