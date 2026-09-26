@@ -61,10 +61,11 @@ class FakeConnection(
     }
     private var wasAnswered = false
     private var snoozeTriggered = false
+    private val callAddress = Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null)
 
     init {
         val displayName = callerName.ifBlank { callerNumber }
-        setAddress(Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null), TelecomManager.PRESENTATION_ALLOWED)
+        setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
         setCallerDisplayName(displayName, TelecomManager.PRESENTATION_ALLOWED)
         setConnectionCapabilities(CAPABILITY_MUTE)
         setAudioModeIsVoip(true)
