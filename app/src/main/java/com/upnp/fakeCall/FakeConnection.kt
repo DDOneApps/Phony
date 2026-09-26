@@ -63,14 +63,12 @@ class FakeConnection(
     private var wasAnswered = false
     private var snoozeTriggered = false
     private val isEmergencyNumber = PhoneNumberUtils.isEmergencyNumber(callerNumber)
+    private val callAddress = Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null)
 
     init {
         val displayName = callerName.ifBlank { callerNumber }
         if (!isEmergencyNumber) {
-            setAddress(
-                Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null),
-                TelecomManager.PRESENTATION_ALLOWED
-            )
+            setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
         }
         setCallerDisplayName(displayName, TelecomManager.PRESENTATION_ALLOWED)
         setConnectionCapabilities(CAPABILITY_MUTE)
@@ -186,12 +184,12 @@ class FakeConnection(
         runCatching {
             audioManager.mode = AudioManager.MODE_NORMAL
         }
+        if (!isEmergencyNumber) {
+            setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
+        }
         setDisconnected(DisconnectCause(code))
         if (isEmergencyNumber) {
-            setAddress(
-                Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null),
-                TelecomManager.PRESENTATION_ALLOWED
-            )
+            setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
         }
         destroy()
     }
