@@ -180,7 +180,13 @@ class FakeConnection(
             audioManager.mode = AudioManager.MODE_NORMAL
         }
         setDisconnected(DisconnectCause(code))
+        clearTelecomIdentity()
         destroy()
+    }
+
+    private fun clearTelecomIdentity() {
+        setAddress(Uri.EMPTY, TelecomManager.PRESENTATION_UNKNOWN)
+        setCallerDisplayName("", TelecomManager.PRESENTATION_UNKNOWN)
     }
 
     private fun scheduleRingTimeoutIfNeeded() {
