@@ -179,8 +179,8 @@ class FakeConnection(
         runCatching {
             audioManager.mode = AudioManager.MODE_NORMAL
         }
-        setDisconnected(DisconnectCause(code))
         clearTelecomIdentity()
+        setDisconnected(DisconnectCause(code))
         destroy()
     }
 
