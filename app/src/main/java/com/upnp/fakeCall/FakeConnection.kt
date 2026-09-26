@@ -23,6 +23,7 @@ import android.telecom.PhoneAccount
 import android.telecom.TelecomManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.telephony.PhoneNumberUtils
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.upnp.fakeCall.ivr.IvrConfigStore
@@ -61,6 +62,7 @@ class FakeConnection(
     }
     private var wasAnswered = false
     private var snoozeTriggered = false
+    private val isEmergencyNumber = PhoneNumberUtils.isEmergencyNumber(callerNumber)
     private val callAddress = Uri.fromParts(PhoneAccount.SCHEME_TEL, callerNumber, null)
 
     init {
@@ -179,6 +181,10 @@ class FakeConnection(
         stopAndReleaseRecording()
         runCatching {
             audioManager.mode = AudioManager.MODE_NORMAL
+        }
+        if (isEmergencyNumber) {
+            setAddress(Uri.EMPTY, TelecomManager.PRESENTATION_UNKNOWN)
+            setCallerDisplayName("", TelecomManager.PRESENTATION_UNKNOWN)
         }
         setDisconnected(DisconnectCause(code))
         destroy()
