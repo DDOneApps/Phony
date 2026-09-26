@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
-import android.telephony.PhoneNumberUtils
 
 class TelecomHelper(private val context: Context) {
 
@@ -59,12 +58,10 @@ class TelecomHelper(private val context: Context) {
             }
 
             val extras = Bundle().apply {
-                if (!PhoneNumberUtils.isEmergencyNumber(normalizedNumber)) {
-                    putParcelable(
-                        TelecomManager.EXTRA_INCOMING_CALL_ADDRESS,
-                        Uri.fromParts(PhoneAccount.SCHEME_TEL, normalizedNumber, null)
-                    )
-                }
+                putParcelable(
+                    TelecomManager.EXTRA_INCOMING_CALL_ADDRESS,
+                    Uri.fromParts(PhoneAccount.SCHEME_TEL, normalizedNumber, null)
+                )
                 putBundle(TelecomManager.EXTRA_INCOMING_CALL_EXTRAS, incomingExtras)
             }
 
