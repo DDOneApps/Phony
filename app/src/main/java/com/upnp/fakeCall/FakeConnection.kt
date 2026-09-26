@@ -184,13 +184,7 @@ class FakeConnection(
         runCatching {
             audioManager.mode = AudioManager.MODE_NORMAL
         }
-        if (!isEmergencyNumber) {
-            setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
-        }
         setDisconnected(DisconnectCause(code))
-        if (isEmergencyNumber) {
-            setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
-        }
         destroy()
     }
 
