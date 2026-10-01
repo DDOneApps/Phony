@@ -1,6 +1,7 @@
 package com.upnp.fakeCall.ui
 
 import android.Manifest
+import android.os.Build
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -110,11 +111,16 @@ private fun modeSlideDirection(fromRoute: String?, toRoute: String?): AnimatedCo
     }
 }
 
-private val RequiredPermissions = arrayOf(
-    Manifest.permission.READ_PHONE_STATE,
-    Manifest.permission.READ_PHONE_NUMBERS,
-    Manifest.permission.RECORD_AUDIO
-)
+
+private val RequiredPermissions: Array<String> = buildList {
+    add(Manifest.permission.READ_PHONE_STATE)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        add(Manifest.permission.READ_PHONE_NUMBERS)
+    }
+
+    add(Manifest.permission.RECORD_AUDIO)
+}.toTypedArray()
 
 @Composable
 fun FakeCallApp(
@@ -547,8 +553,21 @@ private fun ModeSwitchItem(
 }
 
 private fun hasAllPermissions(context: Context): Boolean {
-    return RequiredPermissions.all {
-        ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    val requiredPermissions = buildList {
+        add(Manifest.permission.READ_PHONE_STATE)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            add(Manifest.permission.READ_PHONE_NUMBERS)
+        }
+
+        add(Manifest.permission.RECORD_AUDIO)
+    }
+
+    return requiredPermissions.all {
+        ContextCompat.checkSelfPermission(
+            context,
+            it
+        ) == PackageManager.PERMISSION_GRANTED
     }
 }
 

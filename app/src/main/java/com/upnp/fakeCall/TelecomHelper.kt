@@ -26,7 +26,6 @@ class TelecomHelper(private val context: Context) {
                 .setCapabilities(PhoneAccount.CAPABILITY_CALL_PROVIDER)
                 .addSupportedUriScheme(PhoneAccount.SCHEME_TEL)
                 .build()
-
             telecomManager.registerPhoneAccount(phoneAccount)
             true
         }.getOrDefault(false)
