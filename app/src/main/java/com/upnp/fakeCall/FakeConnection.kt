@@ -89,7 +89,9 @@ class FakeConnection(
             } else {
                 CallAudioState.ROUTE_EARPIECE
             }
-            setAudioRoute(defaultRoute)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                setAudioRoute(defaultRoute)
+            }
             applyAudioRoute(defaultRoute)
         }
         maybeStartMicRecording()
@@ -337,7 +339,7 @@ class FakeConnection(
             }
             '0' -> {
                 if (folderNavStack.size > 1) {
-                    folderNavStack.removeLast()
+                    folderNavStack.removeAt(folderNavStack.lastIndex)
                     speakCurrentFolderMenu()
                 } else {
                     speakFolderPrompt(context.getString(R.string.tts_mp3_ivr_root_folder))

@@ -214,7 +214,7 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             checkForUpdatesOnStartup()
         }
-
+        ensurePhoneAccountRegistered()
         QuickTriggerManager.updateLauncherShortcuts(application)
     }
 
@@ -1104,8 +1104,13 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
 
     fun loadSimProviderOptions(): List<SimProviderOption> {
         val context = getApplication<Application>()
-        val hasPermission = context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED ||
-            context.checkSelfPermission(Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED
+        val hasPermission =
+            context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) ==
+                    PackageManager.PERMISSION_GRANTED ||
+                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                            context.checkSelfPermission(Manifest.permission.READ_PHONE_NUMBERS) ==
+                            PackageManager.PERMISSION_GRANTED)
+
         if (!hasPermission) return emptyList()
 
         val subscriptionManager = context.getSystemService(SubscriptionManager::class.java) ?: return emptyList()
