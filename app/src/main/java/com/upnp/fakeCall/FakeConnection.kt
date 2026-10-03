@@ -16,6 +16,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.media.ToneGenerator
 import android.telecom.CallAudioState
 import android.telecom.Connection
 import android.telecom.DisconnectCause
@@ -188,7 +189,15 @@ class FakeConnection(
             setAddress(Uri.EMPTY, TelecomManager.PRESENTATION_UNKNOWN)
             setCallerDisplayName("", TelecomManager.PRESENTATION_UNKNOWN)
         }
-        setDisconnected(DisconnectCause(code))
+
+        val cause = DisconnectCause(
+            code,
+            null,
+            null,
+            "fake_call_ended",
+            ToneGenerator.TONE_PROP_PROMPT
+        )
+        setDisconnected(cause)
         destroy()
     }
 
