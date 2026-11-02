@@ -68,8 +68,16 @@ class FakeConnection(
 
     init {
         val displayName = callerName.ifBlank { callerNumber }
-        setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
-        setCallerDisplayName(displayName, TelecomManager.PRESENTATION_ALLOWED)
+        val isPrivateNumber = context
+            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getBoolean(KEY_PRIVATE_NUMBER, false)
+        if (isPrivateNumber) {
+            setAddress(Uri.EMPTY, TelecomManager.PRESENTATION_RESTRICTED)
+            setCallerDisplayName("", TelecomManager.PRESENTATION_RESTRICTED)
+        } else {
+            setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
+            setCallerDisplayName(displayName, TelecomManager.PRESENTATION_ALLOWED)
+        }
         setConnectionCapabilities(CAPABILITY_MUTE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             setAudioModeIsVoip(true)
@@ -121,6 +129,7 @@ class FakeConnection(
 
     override fun onCallAudioStateChanged(state: CallAudioState) {
         super.onCallAudioStateChanged(state)
+        if (!wasAnswered) return   // Faster ringtone
         runCatching {
             // Keep the mic live while we are actively recording to avoid unexpected dropouts.
             audioManager.isMicrophoneMute = if (mediaRecorder != null) false else state.isMuted
@@ -969,6 +978,7 @@ class FakeConnection(
         private const val FOLDER_PAGE_SIZE = 9
         private const val TTS_REPEAT_UTTERANCE_ID = "alarm_tts_repeat"
         private const val TTS_REPEAT_DELAY_MILLIS = 750L
+        private const val KEY_PRIVATE_NUMBER = "private_number"
     }
 
     private fun finalizeRecordingDestination(stoppedCleanly: Boolean) {

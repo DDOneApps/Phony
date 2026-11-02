@@ -88,6 +88,7 @@ data class FakeCallUiState(
     val providerName: String = "",
     val callerName: String = "",
     val callerNumber: String = "",
+    val isPrivateNumber: Boolean = false,
     val callerInputMode: CallerInputMode = CallerInputMode.MANUAL,
     val selectedContact: CallContact? = null,
     val pinnedContacts: List<CallContact> = emptyList(),
@@ -149,6 +150,7 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
             providerName = prefs.getString(KEY_PROVIDER_NAME, application.getString(R.string.default_provider_name)).orEmpty(),
             callerName = prefs.getString(KEY_CALLER_NAME, "").orEmpty(),
             callerNumber = prefs.getString(KEY_CALLER_NUMBER, "").orEmpty(),
+            isPrivateNumber = prefs.getBoolean(KEY_PRIVATE_NUMBER, false),
             callerInputMode = runCatching {
                 CallerInputMode.valueOf(
                     prefs.getString(KEY_CALLER_INPUT_MODE, CallerInputMode.MANUAL.name).orEmpty()
@@ -556,6 +558,11 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
 
     fun onCallerNumberChange(value: String) {
         _uiState.update { it.copy(callerNumber = value) }
+    }
+
+    fun onPrivateNumberChange(checked: Boolean) {
+        prefs.edit().putBoolean(KEY_PRIVATE_NUMBER, checked).apply()
+        _uiState.update { it.copy(isPrivateNumber = checked) }
     }
 
     fun onCallerInputModeChange(mode: CallerInputMode) {
@@ -1217,7 +1224,7 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
 
         val (resolvedName, resolvedNumber) = resolveCaller(state)
         val number = resolvedNumber.trim()
-        if (number.isBlank()) {
+        if (number.isBlank() && !state.isPrivateNumber) {
             _uiState.update {
                 it.copy(
                     statusMessage = if (state.callerInputMode == CallerInputMode.CONTACT) {
@@ -1230,10 +1237,12 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
             return
         }
 
-        prefs.edit()
-            .putString(KEY_CALLER_NAME, resolvedName)
-            .putString(KEY_CALLER_NUMBER, number)
-            .apply()
+        if (!state.isPrivateNumber) {
+            prefs.edit()
+                .putString(KEY_CALLER_NAME, resolvedName)
+                .putString(KEY_CALLER_NUMBER, number)
+                .apply()
+        }
 
         val now = System.currentTimeMillis()
         val selectedDelaySeconds = when (state.scheduleKind) {
@@ -1479,6 +1488,7 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun resolveCaller(state: FakeCallUiState): Pair<String, String> {
+        if (state.isPrivateNumber) return "" to ""
         return if (state.callerInputMode == CallerInputMode.CONTACT) {
             val contact = state.selectedContact
             if (contact != null) {
@@ -1876,6 +1886,7 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
         private const val KEY_PROVIDER_NAME = "provider_name"
         private const val KEY_CALLER_NAME = "caller_name"
         private const val KEY_CALLER_NUMBER = "caller_number"
+        private const val KEY_PRIVATE_NUMBER = "private_number"
         private const val KEY_CALLER_INPUT_MODE = "caller_input_mode"
         private const val KEY_SELECTED_CONTACT = "selected_contact"
         private const val KEY_PINNED_CONTACTS = "pinned_contacts"

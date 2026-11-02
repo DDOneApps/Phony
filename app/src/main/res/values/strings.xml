@@ -266,6 +266,7 @@
     <string name="action_choose_audio">Choose audio</string>
     <string name="action_configure_ivr">Configure IVR</string>
     <string name="action_clear_fallback_audio">Clear fallback</string>
+    <string name="label_private_number">Private number/No caller ID</string>
 
     <!-- Common actions -->
     <string name="action_cancel">Cancel</string>
