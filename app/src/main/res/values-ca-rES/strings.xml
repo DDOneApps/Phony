@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">NOTA: Alguns dispositius Android 6 no tenen un interruptor a la configuració per activar el compte de trucades.\n\nToca D\'acord, busca Phony a la llista i activa\'l. Si la pantalla no s\'obre o no hi ha cap interruptor, fes servir un ordinador: connecta el telèfon amb un cable USB, instal·la Android Platform-Tools i executa aquesta ordre en un terminal:\n\n%1$s\n\nGuia completa pas a pas (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nTingues en compte: aquesta és una versió experimental, així que algunes funcions poden no funcionar correctament, i l\'ordre pot variar segons el telèfon i el fabricant.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

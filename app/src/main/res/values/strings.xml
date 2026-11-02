@@ -38,7 +38,14 @@
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
     <string name="onboarding_skip_setup">Skip setup</string>
-
+    <string name="android6_dialog_title">Enable the calling account</string>
+    <string name="android6_dialog_message">NOTE: Some Android 6 devices don\'t have a switch in settings to turn on the calling account.\n\nTap OK, then find Phony in the list and turn it on. If the screen doesn\'t open or there is no switch, use a computer: connect the phone with a USB cable, install Android Platform-Tools and run this command in a terminal:\n\n%1$s\n\nFull step-by-step guide (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nPlease note: this is an experimental version, so some features may not work correctly, and the command may differ between phones and manufacturers.</string>
+    <string name="android6_dialog_ok">OK</string>
+    <string name="onboarding_adb_enable_title">Enable the calling account with adb</string>
+    <string name="onboarding_adb_enable_subtitle">If the switch is missing or the calling account stays off, open Phony once, connect the phone to a computer with USB debugging on, then run this command.</string>
+    <string name="onboarding_adb_enable_command" translatable="false">adb shell telecom set-phone-account-enabled com.upnp.fakeCall/com.upnp.fakeCall.FakeCallConnectionService fake_call_provider_account 0</string>
+    <string name="onboarding_adb_share">Send command to computer</string>
+    <string name="onboarding_adb_share_chooser">Send command</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

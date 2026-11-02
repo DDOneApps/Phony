@@ -1,5 +1,6 @@
 package com.upnp.fakeCall
 
+import android.os.Build
 import android.os.Bundle
 import android.content.Intent
 import androidx.activity.ComponentActivity
@@ -17,12 +18,19 @@ class MainActivity : ComponentActivity() {
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
         )
+        maybeShowAndroid6Dialog()
         val startInSettings = shouldOpenSettings(intent)
         setContent {
             FakecallTheme {
                 FakeCallApp(startInSettings = startInSettings)
             }
         }
+    }
+
+    private fun maybeShowAndroid6Dialog() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) return
+        if (TelecomHelper(this).isAccountEnabled()) return
+        showAndroid6Dialog(this)
     }
 
     private fun shouldOpenSettings(intent: Intent?): Boolean {

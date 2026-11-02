@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">POZNÁMKA: Některá zařízení s Androidem 6 nemají v nastavení přepínač pro zapnutí účtu pro volání.\n\nKlepněte na OK, najděte v seznamu Phony a zapněte ho. Pokud se obrazovka neotevře nebo přepínač chybí, použijte počítač: připojte telefon kabelem USB, nainstalujte Android Platform-Tools a spusťte v terminálu tento příkaz:\n\n%1$s\n\nKompletní návod krok za krokem (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nUpozornění: jde o experimentální verzi, proto některé funkce nemusí fungovat správně a příkaz se může lišit podle telefonu a výrobce.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

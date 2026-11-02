@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">注意：部分 Android 6 裝置的設定中沒有用於啟用通話帳戶的開關。\n\n點選「確定」，然後在清單中找到 Phony 並將其開啟。如果畫面無法開啟或沒有開關，請使用電腦：以 USB 傳輸線連接手機，安裝 Android Platform-Tools，並在終端機中執行以下指令：\n\n%1$s\n\n完整的逐步指南（Windows、macOS、Linux）：https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\n請注意：這是實驗性版本，因此某些功能可能無法正常運作，且該指令可能因手機和廠商而異。</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

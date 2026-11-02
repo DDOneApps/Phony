@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">LET OP: Sommige Android 6-apparaten hebben in de instellingen geen schakelaar om het belaccount in te schakelen.\n\nTik op OK, zoek Phony in de lijst en zet het aan. Als het scherm niet opent of er geen schakelaar is, gebruik dan een computer: sluit de telefoon aan met een USB-kabel, installeer Android Platform-Tools en voer dit commando uit in een terminal:\n\n%1$s\n\nVolledige stapsgewijze handleiding (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nLet op: dit is een experimentele versie, dus sommige functies werken mogelijk niet correct, en het commando kan verschillen per telefoon en fabrikant.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

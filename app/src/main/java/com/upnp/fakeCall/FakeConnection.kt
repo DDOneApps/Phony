@@ -71,7 +71,9 @@ class FakeConnection(
         setAddress(callAddress, TelecomManager.PRESENTATION_ALLOWED)
         setCallerDisplayName(displayName, TelecomManager.PRESENTATION_ALLOWED)
         setConnectionCapabilities(CAPABILITY_MUTE)
-        setAudioModeIsVoip(true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            setAudioModeIsVoip(true)
+        }
         setInitializing()
         setRinging()
         scheduleRingTimeoutIfNeeded()
@@ -80,6 +82,9 @@ class FakeConnection(
     override fun onAnswer() {
         cancelRingTimeout()
         wasAnswered = true
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            setAudioModeIsVoip(true)
+        }
         setActive()
         runCatching {
             audioManager.mode = AudioManager.MODE_IN_COMMUNICATION

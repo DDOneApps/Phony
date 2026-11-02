@@ -37,7 +37,7 @@
     <string name="onboarding_finish_setup">Selesaikan pengaturan</string>
     <string name="onboarding_finish_setup_needs_permissions">Selesaikan pengaturan (butuh izin)</string>
     <string name="onboarding_skip_setup">Lewati pengaturan</string>
-
+    <string name="android6_dialog_message">CATATAN: Beberapa perangkat Android 6 tidak memiliki sakelar di pengaturan untuk mengaktifkan akun panggilan.\n\nKetuk OK, lalu cari Phony di daftar dan aktifkan. Jika layar tidak terbuka atau tidak ada sakelar, gunakan komputer: hubungkan ponsel dengan kabel USB, instal Android Platform-Tools, dan jalankan perintah ini di terminal:\n\n%1$s\n\nPanduan langkah demi langkah lengkap (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nPerhatikan: ini adalah versi eksperimental, sehingga beberapa fitur mungkin tidak berfungsi dengan benar, dan perintahnya dapat berbeda antar ponsel dan produsen.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Jadwalkan kabur yang pas</string>

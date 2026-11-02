@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.upnp.fakeCall"
-        minSdk = 24
+        minSdk = 23
         targetSdk = 36
         versionCode = 26
         versionName = "2.6"

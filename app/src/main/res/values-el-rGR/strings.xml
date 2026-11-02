@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">Όλα έτοιμα! Είστε έτοιμοι να προγραμματίσετε την πρώτη σας ψεύτικη κλήση.</string>
     <string name="onboarding_finish_setup">Ολοκλήρωση ρυθμίσεων</string>
     <string name="onboarding_finish_setup_needs_permissions">Ολοκλήρωση ρυθμίσεων (απαιτούνται άδειες)</string>
+    <string name="android6_dialog_message">ΣΗΜΕΙΩΣΗ: Ορισμένες συσκευές Android 6 δεν διαθέτουν διακόπτη στις ρυθμίσεις για την ενεργοποίηση του λογαριασμού κλήσεων.\n\nΠατήστε OK, βρείτε το Phony στη λίστα και ενεργοποιήστε το. Αν η οθόνη δεν ανοίξει ή δεν υπάρχει διακόπτης, χρησιμοποιήστε υπολογιστή: συνδέστε το τηλέφωνο με καλώδιο USB, εγκαταστήστε το Android Platform-Tools και εκτελέστε αυτή την εντολή σε ένα τερματικό:\n\n%1$s\n\nΠλήρης οδηγός βήμα προς βήμα (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nΣημείωση: πρόκειται για πειραματική έκδοση, επομένως ορισμένες λειτουργίες ενδέχεται να μη λειτουργούν σωστά και η εντολή μπορεί να διαφέρει ανάλογα με το τηλέφωνο και τον κατασκευαστή.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Προγραμματίστε την τέλεια διαφυγή σας</string>

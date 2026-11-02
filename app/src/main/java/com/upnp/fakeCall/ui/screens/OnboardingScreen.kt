@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -58,6 +59,7 @@ import com.upnp.fakeCall.BatterySetupNavigator
 import com.upnp.fakeCall.RomFamily
 import com.upnp.fakeCall.R
 import com.upnp.fakeCall.SimProviderOption
+import com.upnp.fakeCall.showAndroid6Dialog
 import com.upnp.fakeCall.ui.components.AnimatedIcon
 import com.upnp.fakeCall.ui.components.ExpressiveButton
 import com.upnp.fakeCall.ui.components.ExpressiveCardShape
@@ -83,6 +85,9 @@ fun OnboardingScreen(
     var simProviderOptions by remember { mutableStateOf<List<SimProviderOption>>(emptyList()) }
     val legacyAdbCommand = stringResource(R.string.onboarding_adb_command)
     val telecomUiAdbCommand = stringResource(R.string.onboarding_adb_command_telecomui)
+    val enableAccountAdbCommand = stringResource(R.string.onboarding_adb_enable_command)
+    val shareLabel = stringResource(R.string.onboarding_adb_share)
+    val shareChooserTitle = stringResource(R.string.onboarding_adb_share_chooser)
     val callingAccountsAdbCommand = remember(context) {
         resolveCallingAccountsAdbCommand(context, legacyAdbCommand, telecomUiAdbCommand)
     }
@@ -163,8 +168,12 @@ fun OnboardingScreen(
                     actionLabel = stringResource(R.string.permission_phone_action),
                     onAction = {
                         haptics.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
-                        val intent = viewModel.openCallingAccountsIntent()
-                        runCatching { context.startActivity(intent) }
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                            showAndroid6Dialog(context)
+                        } else {
+                            val intent = viewModel.openCallingAccountsIntent()
+                            runCatching { context.startActivity(intent) }
+                        }
                     }
                 )
             }
@@ -247,6 +256,76 @@ fun OnboardingScreen(
                                 modifier = Modifier.padding(14.dp)
                             )
                         }
+                        ExpressiveButton(
+                            label = shareLabel,
+                            onClick = {
+                                haptics.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
+                                shareCommand(context, callingAccountsAdbCommand, shareChooserTitle)
+                            },
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                }
+            }
+
+            item {
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    shape = ExpressiveCardShape,
+                    tonalElevation = 2.dp
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(18.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            AnimatedIcon(
+                                imageVector = Icons.Outlined.Settings,
+                                contentDescription = null,
+                                shape = androidx.compose.foundation.shape.CircleShape,
+                                backgroundColor = MaterialTheme.colorScheme.secondaryContainer,
+                                tint = MaterialTheme.colorScheme.onSecondaryContainer
+                            )
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = stringResource(R.string.onboarding_adb_enable_title),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = stringResource(R.string.onboarding_adb_enable_subtitle),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                        Surface(
+                            color = MaterialTheme.colorScheme.surfaceContainer,
+                            shape = ExpressiveCardShape,
+                            tonalElevation = 1.dp
+                        ) {
+                            Text(
+                                text = enableAccountAdbCommand,
+                                style = MaterialTheme.typography.labelLarge,
+                                fontFamily = FontFamily.Monospace,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(14.dp)
+                            )
+                        }
+                        ExpressiveButton(
+                            label = shareLabel,
+                            onClick = {
+                                haptics.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
+                                shareCommand(context, enableAccountAdbCommand, shareChooserTitle)
+                            },
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
                     }
                 }
             }
@@ -580,4 +659,14 @@ private fun resolveCallingAccountsAdbCommand(
         context.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
     }.getOrNull()
     return if (resolved != null) telecomUiCommand else legacyCommand
+}
+
+private fun shareCommand(context: Context, command: String, chooserTitle: String) {
+    val send = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, command)
+    }
+    val chooser = Intent.createChooser(send, chooserTitle)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    runCatching { context.startActivity(chooser) }
 }

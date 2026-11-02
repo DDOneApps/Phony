@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">¡Todo listo! Estás listo para programar tu primera llamada falsa.</string>
     <string name="onboarding_finish_setup">Finalizar configuración</string>
     <string name="onboarding_finish_setup_needs_permissions">Finalizar configuración (necesita permisos)</string>
+    <string name="android6_dialog_message">NOTA: Algunos dispositivos con Android 6 no tienen un interruptor en los ajustes para activar la cuenta de llamadas.\n\nToca Aceptar, busca Phony en la lista y actívalo. Si la pantalla no se abre o no hay interruptor, usa un ordenador: conecta el teléfono con un cable USB, instala Android Platform-Tools y ejecuta este comando en un terminal:\n\n%1$s\n\nGuía completa paso a paso (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nTen en cuenta: esta es una versión experimental, por lo que algunas funciones pueden no funcionar correctamente, y el comando puede variar según el teléfono y el fabricante.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Programa tu escape perfecto</string>

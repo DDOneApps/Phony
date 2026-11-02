@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">НАПОМЕНА: Неки Android 6 уређаји немају прекидач у подешавањима за укључивање налога за позиве.\n\nДодирните ОК, затим пронађите Phony на листи и укључите га. Ако се екран не отвори или нема прекидача, користите рачунар: повежите телефон USB каблом, инсталирајте Android Platform-Tools и покрените ову команду у терминалу:\n\n%1$s\n\nКомплетан водич корак по корак (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nИмајте на уму: ово је експериментална верзија, па неке функције можда неће радити исправно, а команда се може разликовати зависно од телефона и произвођача.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

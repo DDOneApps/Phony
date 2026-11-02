@@ -3,6 +3,7 @@ package com.upnp.fakeCall.ui.screens
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.provider.ContactsContract
 import android.text.format.DateFormat
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -93,6 +94,7 @@ import com.upnp.fakeCall.FakeCallUiState
 import com.upnp.fakeCall.FakeCallViewModel
 import com.upnp.fakeCall.R
 import com.upnp.fakeCall.ScheduleKind
+import com.upnp.fakeCall.showAndroid6Dialog
 import com.upnp.fakeCall.ui.components.AnimatedIcon
 import com.upnp.fakeCall.ui.components.AudioPreviewCard
 import com.upnp.fakeCall.ui.components.CallerInputCard
@@ -245,7 +247,9 @@ fun DashboardScreen(
                 bottomBar = {
                     Column {
                         BottomActionBar(
-                            enabled = canRunPrimaryAction,
+                            enabled = canRunPrimaryAction ||
+                                    (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && !state.isProviderEnabled),
+                            looksEnabled = canRunPrimaryAction,
                             label = actionLabel,
                             containerColor = actionContainerColor,
                             contentColor = actionContentColor,
@@ -256,6 +260,9 @@ fun DashboardScreen(
                                 if (canRunPrimaryAction) {
                                     haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                                     viewModel.onTriggerOrCancelClicked()
+                                } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && !state.isProviderEnabled) {
+                                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    showAndroid6Dialog(context)
                                 }
                             }
                         )
@@ -696,6 +703,7 @@ private fun RecordingQuickToggleCard(
 @Composable
 private fun BottomActionBar(
     enabled: Boolean,
+    looksEnabled: Boolean,
     label: String,
     containerColor: androidx.compose.ui.graphics.Color,
     contentColor: androidx.compose.ui.graphics.Color,
@@ -722,7 +730,7 @@ private fun BottomActionBar(
                 .fillMaxWidth()
                 .height(64.dp)
                 .bounceClick(enabled = enabled, onClick = onClick),
-            color = containerColor.copy(alpha = if (enabled) 0.96f else 0.6f),
+            color = containerColor.copy(alpha = if (looksEnabled) 0.96f else 0.6f),
             contentColor = contentColor,
             shape = RoundedCornerShape(28.dp),
             tonalElevation = 4.dp

@@ -35,6 +35,9 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_title">Włącz konto połączeń</string>
+    <string name="android6_dialog_message">UWAGA: Na niektórych urządzeniach z Androidem 6 w ustawieniach nie ma przełącznika do włączenia konta połączeń.\n\nKliknij OK, znajdź Phony na liście i włącz je. Jeśli ekran się nie otworzy lub nie ma przełącznika, użyj komputera: podłącz telefon kablem USB, zainstaluj Android Platform-Tools i uruchom w terminalu to polecenie:\n\n%1$s\n\nPełny przewodnik krok po kroku (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nUwaga: to wersja eksperymentalna, więc niektóre funkcje mogą nie działać poprawnie, a polecenie może się różnić w zależności od telefonu i producenta.</string>
+    <string name="android6_dialog_ok">OK</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">OBS: Vissa Android 6-enheter har inget reglage i inställningarna för att aktivera samtalskontot.\n\nTryck på OK, hitta sedan Phony i listan och slå på det. Om skärmen inte öppnas eller det inte finns något reglage, använd en dator: anslut telefonen med en USB-kabel, installera Android Platform-Tools och kör det här kommandot i en terminal:\n\n%1$s\n\nFullständig steg-för-steg-guide (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nObservera: det här är en experimentell version, så vissa funktioner kanske inte fungerar korrekt, och kommandot kan skilja sig mellan telefoner och tillverkare.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

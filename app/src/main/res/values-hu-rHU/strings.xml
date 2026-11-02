@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">MEGJEGYZÉS: Egyes Android 6-os eszközökön a beállításokban nincs kapcsoló a hívási fiók bekapcsolásához.\n\nÉrintse meg az OK gombot, keresse meg a Phony alkalmazást a listában, és kapcsolja be. Ha a képernyő nem nyílik meg, vagy nincs kapcsoló, használjon számítógépet: csatlakoztassa a telefont USB-kábellel, telepítse az Android Platform-Tools csomagot, és futtassa ezt a parancsot egy terminálban:\n\n%1$s\n\nTeljes lépésenkénti útmutató (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nFigyelem: ez egy kísérleti verzió, ezért egyes funkciók nem biztos, hogy megfelelően működnek, és a parancs telefononként és gyártónként eltérhet.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

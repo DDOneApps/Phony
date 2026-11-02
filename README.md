@@ -18,8 +18,10 @@
 
 </div>
 
+> **Using Android 6?** Phony needs a quick one-time setup on Android 6 (the calling account has to be enabled). See [Android 6 (API 23) setup](#android-6-api-23-setup).
+
 ## Overview
-Ever wanted to get [that Feature of old Samsung phones](https://www.youtube.com/watch?v=OKV3Eei5JNE) to simulate an incoming call with audio on the originial phone app?
+Ever wanted to get [that Feature of old Samsung phones](https://www.youtube.com/watch?v=OKV3Eei5JNE) to simulate an incoming call with audio on the original phone app?
 Introducing Phony. Unlike other apps that merely mock a UI, this app integrates directly with the Android Telecom Framework to provide an indistinguishable calling experience. It has many features to make the call as real as possible.
 
 <p align=center>
@@ -89,6 +91,94 @@ You can also save up to five quick trigger presets from the same section:
 
 - presets appear as launcher app actions (long-press the app icon)
 - presets are available as Quick Settings tiles (`Phony Preset 1` ... `Phony Preset 5`)
+
+## Android 6 (API 23) setup
+
+Phony runs on Android 6.0 or newer. On Android 5.x the system rejects the registration of the calling account, so the app cannot work there.
+
+> **Experimental:** Android 6 support is experimental. Some features may not work correctly, and the steps below may differ between phones and manufacturers.
+
+On Android 6 the calling account has to be enabled once before Phony can simulate a call.
+
+### Option 1: switch in Settings
+
+1. Open Phony once (this registers the calling account).
+2. Tap **Open calling accounts** in the setup screen, or go to Phone -> Settings -> Calling accounts.
+3. Find **Phony** in the list and turn it on.
+
+**Note:** some Android 6 devices don't have this switch (or the settings screen closes by itself). If that happens, use Option 2.
+
+### Option 2: adb (from a computer)
+
+**Step 1.** On the phone, enable **Developer options** (go to Settings -> About phone [or Software information], then tap **Build number** 7 times). Go back to the main Settings menu, open the newly visible **Developer options** section, scroll down, and turn on **USB debugging**.
+
+**Step 2.** Download and extract [Android Platform-Tools](https://developer.android.com/tools/releases/platform-tools) on your computer.
+
+**Step 3.** Connect the phone with a USB cable and accept the debugging prompt on the phone screen.
+
+**Step 4.** Open a terminal on your computer:
+
+- **Windows:** Open the extracted `platform-tools` folder in File Explorer, click the **folder path bar at the top** (where it shows folder names like `This PC > Downloads > platform-tools`), clear everything from this bar, type `cmd`, and press Enter.
+- **macOS / Linux:** Open Terminal, type `cd ` (with a space at the end), drag and drop the `platform-tools` folder into the Terminal window, and press Enter (or right-click the folder in Finder and choose **New Terminal at Folder**).
+
+**Step 5.** Check that the phone is detected by running this command:
+
+```bash
+adb devices
+```
+
+On Windows PowerShell you might need to use `./adb devices` instead.
+
+Your phone should appear in the list with the status `device`. If it says `unauthorized` or isn't listed at all, unlock the phone, unplug and reconnect the USB cable, accept the debugging prompt on the phone, and run the command again.
+
+**Step 6.** Open Phony once.
+
+**Step 7.** Run this command to enable the account:
+
+```bash
+adb shell telecom set-phone-account-enabled com.upnp.fakeCall/com.upnp.fakeCall.FakeCallConnectionService fake_call_provider_account 0
+```
+
+**Step 8.** Check the result. Run the command that matches your system:
+
+**macOS / Linux:**
+
+```bash
+adb shell dumpsys telecom | grep "com.upnp.fakeCall"
+```
+
+**Windows (Command Prompt):**
+
+```cmd
+adb shell dumpsys telecom | findstr "com.upnp.fakeCall"
+```
+
+**Windows (PowerShell):**
+
+```powershell
+adb shell dumpsys telecom | Select-String "com.upnp.fakeCall"
+```
+
+Find the line containing `com.upnp.fakeCall`. If it starts with `[[X]`, the account is enabled; `[[ ]` means disabled.
+
+Example output: `[[X] PhoneAccount: ComponentInfo{com.upnp.fakeCall/com.upnp.fakeCall.FakeCallConnectionService}, ...`
+
+To disable the account again:
+
+```bash
+adb shell telecom set-phone-account-disabled com.upnp.fakeCall/com.upnp.fakeCall.FakeCallConnectionService fake_call_provider_account 0
+```
+
+**Troubleshooting**
+
+- `is ComponentInfo{...} a valid PhoneAccount?`: open Phony once so the account gets registered, and make sure the package, class and account id are exactly as in the command above.
+- Several devices connected: add `-s SERIAL` right after `adb` (the serial comes from `adb devices`).
+- Samsung devices may print `MdfppReflectionUtils ... UnsatisfiedLinkError` warnings. They are harmless; look for the line starting with `Success`.
+- The command may differ between phones and manufacturers.
+
+### Limitations on Android 6
+
+Quick Settings tiles (Android 7+) and launcher app actions (Android 7.1+) are not available on Android 6.
 
 ## Screenshots
 

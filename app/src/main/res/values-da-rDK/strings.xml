@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">BEMÆRK: Nogle Android 6-enheder har ikke en kontakt i indstillingerne til at aktivere opkaldskontoen.\n\nTryk på OK, find derefter Phony på listen og slå den til. Hvis skærmen ikke åbner, eller der ikke er nogen kontakt, skal du bruge en computer: tilslut telefonen med et USB-kabel, installer Android Platform-Tools og kør denne kommando i en terminal:\n\n%1$s\n\nKomplet trin-for-trin-vejledning (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nBemærk: dette er en eksperimentel version, så nogle funktioner fungerer muligvis ikke korrekt, og kommandoen kan variere mellem telefoner og producenter.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

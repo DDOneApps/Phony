@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">All set! You\'re ready to schedule your first fake call.</string>
     <string name="onboarding_finish_setup">Finish setup</string>
     <string name="onboarding_finish_setup_needs_permissions">Finish setup (needs permissions)</string>
+    <string name="android6_dialog_message">HUOMAA: Joissakin Android 6 -laitteissa asetuksissa ei ole kytkintä puhelutilin ottamiseksi käyttöön.\n\nValitse OK, etsi Phony luettelosta ja ota se käyttöön. Jos näyttö ei aukea tai kytkintä ei ole, käytä tietokonetta: yhdistä puhelin USB-kaapelilla, asenna Android Platform-Tools ja suorita tämä komento päätteessä:\n\n%1$s\n\nTäydellinen vaiheittainen opas (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nHuomaa: tämä on kokeellinen versio, joten jotkin ominaisuudet eivät välttämättä toimi oikein, ja komento voi vaihdella puhelimen ja valmistajan mukaan.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Schedule your perfect escape</string>

@@ -35,6 +35,7 @@
     <string name="onboarding_all_set">Все налаштовано! Ви готові назначити ваш перший фальшивий дзвінок.</string>
     <string name="onboarding_finish_setup">Закінчити налаштування</string>
     <string name="onboarding_finish_setup_needs_permissions">Закінчити налаштування(Необхідно дозвіл)</string>
+    <string name="android6_dialog_message">ПРИМІТКА: На деяких пристроях з Android 6 у налаштуваннях немає перемикача для ввімкнення облікового запису для дзвінків.\n\nНатисніть OK, знайдіть Phony у списку та ввімкніть його. Якщо екран не відкривається або перемикача немає, скористайтеся комп\'ютером: підключіть телефон кабелем USB, встановіть Android Platform-Tools і виконайте в терміналі цю команду:\n\n%1$s\n\nПовний покроковий посібник (Windows, macOS, Linux): https://github.com/DDOneApps/Phony#android-6-api-23-setup\n\nЗверніть увагу: це експериментальна версія, тому деякі функції можуть працювати некоректно, а команда може відрізнятися залежно від телефону та виробника.</string>
     <!-- Dashboard -->
     <string name="app_title">Phony</string>
     <string name="app_subtitle">Сплануй свою ідеальну втечу</string>
