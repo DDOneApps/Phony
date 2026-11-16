@@ -104,6 +104,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.upnp.fakeCall.AnswerAudioMode
 import com.upnp.fakeCall.BuildConfig
 import com.upnp.fakeCall.FakeCallViewModel
+import com.upnp.fakeCall.IvrKeyPressBroadcastSettings
 import com.upnp.fakeCall.QuickTriggerManager
 import com.upnp.fakeCall.ReleaseInfo
 import com.upnp.fakeCall.R
@@ -1021,6 +1022,13 @@ fun SettingsScreen(
                             }
                         }
                     }
+
+                    item {
+                        IvrKeypressBroadcastCard(
+                            enabledKeys = state.ivrKeyBroadcastKeys,
+                            onKeyEnabledChange = viewModel::onIvrKeyBroadcastEnabledChange
+                        )
+                    }
                 }
 
                 item {
@@ -1497,6 +1505,33 @@ private fun MailboxNodeCard(
                 androidx.compose.material3.Icon(Icons.Outlined.Add, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(stringResource(R.string.action_add_mapping))
+            }
+        }
+    }
+}
+
+@Composable
+private fun IvrKeypressBroadcastCard(
+    enabledKeys: Set<Char>,
+    onKeyEnabledChange: (Char, Boolean) -> Unit
+) {
+    PreferenceCard(
+        icon = Icons.Outlined.Phone,
+        title = stringResource(R.string.settings_ivr_keypress_broadcast_title),
+        subtitle = stringResource(R.string.settings_ivr_keypress_broadcast_subtitle),
+        onClick = null,
+        trailingContent = null
+    ) {
+        Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            IvrKeyPressBroadcastSettings.supportedKeys.forEach { key ->
+                androidx.compose.material3.FilterChip(
+                    selected = key in enabledKeys,
+                    onClick = { onKeyEnabledChange(key, key !in enabledKeys) },
+                    label = { Text(key.toString()) }
+                )
             }
         }
     }

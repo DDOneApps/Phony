@@ -50,8 +50,6 @@ class FakeCallAlarmReceiver : BroadcastReceiver() {
                 val callerNumber = intent?.getStringExtra(EXTRA_CALLER_NUMBER).orEmpty()
                 val providerName = intent?.getStringExtra(EXTRA_PROVIDER_NAME).orEmpty()
 
-                if (callerNumber.isBlank()) return@launch
-
                 val telecomHelper = TelecomHelper(context)
                 telecomHelper.registerOrUpdatePhoneAccount(providerName.ifBlank { context.getString(R.string.default_provider_name) })
                 if (telecomHelper.isAccountEnabled()) {

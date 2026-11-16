@@ -79,6 +79,20 @@ For Tasker, MacroDroid, etc. set:
 - Action: `com.upnp.fakeCall.TRIGGER`
 - Package: `com.upnp.fakeCall`
 
+## Keypress Broadcasts
+
+Each selected keypad key sends an implicit broadcast on an answered fake call. Configure keys individually in `Settings -> Custom keybinds (IVR) -> Keypress broadcasts`; they work independently or alongside Custom keymap IVR and MP3-folder IVR.
+
+**Action**
+
+`com.upnp.fakeCall.KEY_PRESSED`
+
+**Extra**
+
+- `key_value` (`String`): the pressed key, for example `1`, `*`, or `#`.
+
+The action is case-sensitive. Phony also emits the earlier `com.ddone.phony.KEY_PRESSED` action for compatibility.
+
 ## Accessibility Quick Trigger
 
 Enable the `Phony` accessibility service and assign it to the system accessibility button or shortcut. When invoked, it schedules a fake call using the saved quick-trigger defaults from Settings and shows a short confirmation toast.

@@ -186,6 +186,8 @@
     <string name="settings_mp3_ivr_clear_folder_title">Clear MP3 IVR folder</string>
     <string name="settings_mp3_ivr_clear_folder_subtitle">Disable folder-based IVR navigation source.</string>
     <string name="settings_mp3_ivr_no_folder_selected">No folder selected</string>
+    <string name="settings_ivr_keypress_broadcast_title">Keypress broadcasts</string>
+    <string name="settings_ivr_keypress_broadcast_subtitle">Choose the keys that send automation broadcasts. Selected keys work on their own or with normal IVR actions.</string>
     <string name="settings_export_mailbox_title">Export IVR XML</string>
     <string name="settings_export_mailbox_subtitle">Share your current IVR tree.</string>
     <string name="settings_add_node_title">Add menu node</string>

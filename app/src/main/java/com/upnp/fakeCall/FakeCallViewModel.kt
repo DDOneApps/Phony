@@ -123,6 +123,7 @@ data class FakeCallUiState(
     val isMp3IvrModeEnabled: Boolean = false,
     val mp3IvrFolderUri: String = "",
     val mp3IvrFolderName: String = "",
+    val ivrKeyBroadcastKeys: Set<Char> = emptySet(),
     val startupUpdate: ReleaseInfo? = null
 )
 
@@ -134,6 +135,7 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
     private val telecomHelper = TelecomHelper(application)
     private val prefs = application.getSharedPreferences(PREFS_NAME, 0)
     private val ivrStore = IvrConfigStore()
+    private val initialIvrKeyBroadcastKeys = IvrKeyPressBroadcastSettings.load(application)
     private val updateChecker = UpdateChecker()
     private val quickTriggerDefaults = QuickTriggerManager.loadDefaults(application)
     private val quickTriggerPresets = QuickTriggerManager.loadPresets(application)
@@ -193,7 +195,8 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
             mp3IvrFolderName = prefs.getString(
                 KEY_MP3_IVR_FOLDER_NAME,
                 application.getString(R.string.settings_mp3_ivr_no_folder_selected)
-            ).orEmpty()
+            ).orEmpty(),
+            ivrKeyBroadcastKeys = initialIvrKeyBroadcastKeys
         )
     )
     val uiState: StateFlow<FakeCallUiState> = _uiState.asStateFlow()
@@ -963,6 +966,11 @@ class FakeCallViewModel(application: Application) : AndroidViewModel(application
             val nodes = current.nodes.toMutableMap().apply { put(parentId, updated) }
             current.copy(nodes = nodes)
         }
+    }
+
+    fun onIvrKeyBroadcastEnabledChange(key: Char, enabled: Boolean) {
+        val updated = IvrKeyPressBroadcastSettings.setEnabled(getApplication(), key, enabled)
+        _uiState.update { it.copy(ivrKeyBroadcastKeys = updated) }
     }
 
     fun exportIvrConfig(uri: Uri?) {

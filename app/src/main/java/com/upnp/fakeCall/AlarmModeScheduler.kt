@@ -33,6 +33,31 @@ object AlarmModeScheduler {
         return scheduleAt(context, alarm, triggerAtMillis)
     }
 
+    /**
+     * AlarmManager removes app alarms at reboot. Restore the next occurrence for every
+     * enabled persisted alarm and keep its displayed next-trigger time in sync.
+     */
+    fun rescheduleEnabled(context: Context) {
+        val savedAlarms = AlarmModeRepository.load(context)
+        var changed = false
+        val rescheduledAlarms = savedAlarms.map { alarm ->
+            if (!alarm.enabled) {
+                alarm
+            } else {
+                val nextTriggerAtMillis = schedule(context, alarm)
+                if (nextTriggerAtMillis != alarm.nextTriggerAtMillis) {
+                    changed = true
+                    alarm.copy(nextTriggerAtMillis = nextTriggerAtMillis)
+                } else {
+                    alarm
+                }
+            }
+        }
+        if (changed) {
+            AlarmModeRepository.replaceAll(context, rescheduledAlarms)
+        }
+    }
+
     fun cancel(context: Context, alarmId: Long) {
         val alarmManager = context.getSystemService(AlarmManager::class.java)
         val pendingIntent = PendingIntent.getBroadcast(

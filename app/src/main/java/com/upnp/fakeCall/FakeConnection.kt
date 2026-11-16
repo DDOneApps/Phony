@@ -3,6 +3,7 @@ package com.upnp.fakeCall
 import android.Manifest
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
@@ -169,6 +170,11 @@ class FakeConnection(
 
     override fun onPlayDtmfTone(c: Char) {
         super.onPlayDtmfTone(c)
+        val isKeyBroadcastEnabled = c in IvrKeyPressBroadcastSettings.load(context)
+        Log.d(TAG, "DTMF key '$c' received; keypress broadcast enabled=$isKeyBroadcastEnabled")
+        if (isKeyBroadcastEnabled) {
+            broadcastIvrKeyPress(c)
+        }
         if (c == '1' && runtimeOverrides.snoozeEnabled) {
             triggerSnooze()
             disconnectWithCause(DisconnectCause.LOCAL)
@@ -185,6 +191,23 @@ class FakeConnection(
         val uri = runCatching { Uri.parse(uriString) }.getOrNull() ?: return
         val attrs = ivrAudioAttributes ?: buildVoiceAudioAttributes()
         switchToAudio(uri, attrs)
+    }
+
+    private fun broadcastIvrKeyPress(key: Char) {
+        runCatching {
+            Log.i(TAG, "Sending keypress broadcast for '$key': $ACTION_IVR_KEY_PRESSED")
+            context.sendBroadcast(
+                Intent(ACTION_IVR_KEY_PRESSED)
+                    .putExtra(EXTRA_IVR_KEY_VALUE, key.toString())
+            )
+            context.sendBroadcast(
+                Intent(ACTION_IVR_KEY_PRESSED_LEGACY)
+                    .putExtra(EXTRA_IVR_KEY_VALUE, key.toString())
+            )
+            Log.i(TAG, "Keypress broadcasts sent for '$key'")
+        }.onFailure {
+            Log.w(TAG, "Unable to broadcast IVR key press", it)
+        }
     }
 
     private fun disconnectWithCause(code: Int) {
@@ -950,6 +973,10 @@ class FakeConnection(
     }
 
     companion object {
+        const val ACTION_IVR_KEY_PRESSED = "com.upnp.fakeCall.KEY_PRESSED"
+        const val ACTION_IVR_KEY_PRESSED_LEGACY = "com.ddone.phony.KEY_PRESSED"
+        const val EXTRA_IVR_KEY_VALUE = "key_value"
+
         private const val TAG = "FakeConnection"
         private const val PREFS_NAME = "fake_call_prefs"
         private const val KEY_ANSWER_AUDIO_MODE = "answer_audio_mode"
